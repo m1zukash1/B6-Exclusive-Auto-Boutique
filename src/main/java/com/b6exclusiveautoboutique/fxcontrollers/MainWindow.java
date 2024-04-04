@@ -1,7 +1,6 @@
-package com.kursinis.kursinisdarbas.fxcontrollers;
+package com.b6exclusiveautoboutique.fxcontrollers;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
@@ -10,7 +9,7 @@ import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import com.kursinis.kursinisdarbas.model.Product;
+import com.b6exclusiveautoboutique.model.Product;
 
 public class MainWindow implements Initializable {
     public ComboBox<Product.Year> yearComboBox;

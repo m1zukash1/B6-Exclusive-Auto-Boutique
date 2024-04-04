@@ -7,8 +7,8 @@ module com.kursinis.kursinisdarbas {
     requires atlantafx.base;
 
 
-    opens com.kursinis.kursinisdarbas to javafx.fxml;
-    exports com.kursinis.kursinisdarbas;
-    exports com.kursinis.kursinisdarbas.fxcontrollers;
-    opens com.kursinis.kursinisdarbas.fxcontrollers to javafx.fxml;
+    opens com.b6exclusiveautoboutique to javafx.fxml;
+    exports com.b6exclusiveautoboutique;
+    exports com.b6exclusiveautoboutique.fxcontrollers;
+    opens com.b6exclusiveautoboutique.fxcontrollers to javafx.fxml;
 }

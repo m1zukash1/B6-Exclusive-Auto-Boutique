@@ -1,6 +1,5 @@
-package com.kursinis.kursinisdarbas;
+package com.b6exclusiveautoboutique;
 
-import atlantafx.base.theme.PrimerDark;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

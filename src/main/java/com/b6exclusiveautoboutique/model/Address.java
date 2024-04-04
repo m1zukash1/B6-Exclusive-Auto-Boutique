@@ -1,4 +1,4 @@
-package com.kursinis.kursinisdarbas.model;
+package com.b6exclusiveautoboutique.model;
 
 public class Address {
     private String firstName;
