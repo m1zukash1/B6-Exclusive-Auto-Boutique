@@ -1,4 +1,5 @@
 package com.b6exclusiveautoboutique.fxcontrollers;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
@@ -11,7 +12,7 @@ import java.util.stream.Stream;
 
 import com.b6exclusiveautoboutique.model.Product;
 
-public class MainWindow implements Initializable {
+public class ProductController implements Initializable {
     public ComboBox<Product.Year> yearComboBox;
     public TextField priceTextField;
     public TextField mileageTextField;
@@ -52,7 +53,6 @@ public class MainWindow implements Initializable {
                 updateUIControls(newValue);
             }
         });
-
     }
 
     private void updateUIControls(Product product) {

@@ -10,42 +10,18 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane minHeight="600.0" minWidth="800.0" prefHeight="720.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.b6exclusiveautoboutique.fxcontrollers.MainWindow">
+<AnchorPane minHeight="600.0" minWidth="800.0" prefHeight="720.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="384.0" minWidth="800.0" prefHeight="720.0" prefWidth="920.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
           <Tab text="Products">
             <content>
-                  <SplitPane dividerPositions="0.5">
-                     <items>
-                        <AnchorPane prefHeight="200.0" prefWidth="200.0">
-                           <children>
-                              <ListView fx:id="productListView" layoutX="-37.0" layoutY="-65.0" prefHeight="571.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                           </children>
-                        </AnchorPane>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="572.0">
-                           <children>
-                              <ComboBox fx:id="yearComboBox" layoutX="417.0" layoutY="28.0" prefWidth="150.0" promptText="Year" AnchorPane.leftAnchor="25.0" />
-                              <Button layoutX="599.0" layoutY="28.0" mnemonicParsing="false" onAction="#onAddButtonAction" prefHeight="26.0" prefWidth="60.0" text="Add" AnchorPane.leftAnchor="200.0" />
-                              <TextField fx:id="priceTextField" layoutX="418.0" layoutY="67.0" promptText="Price" AnchorPane.leftAnchor="25.0" />
-                              <TextField fx:id="mileageTextField" layoutX="419.0" layoutY="107.0" promptText="mileage in kilometers" AnchorPane.leftAnchor="25.0" />
-                              <ComboBox fx:id="transmissionTypeComboBox" layoutX="419.0" layoutY="147.0" prefWidth="150.0" promptText="Transmission type" AnchorPane.leftAnchor="25.0" />
-                              <ComboBox fx:id="fuelTypeComboBox" layoutX="419.0" layoutY="192.0" prefWidth="150.0" promptText="Fuel type" AnchorPane.leftAnchor="25.0" />
-                              <ComboBox fx:id="engineTypeComboBox" layoutX="419.0" layoutY="232.0" prefWidth="150.0" promptText="Engine type" AnchorPane.leftAnchor="25.0" />
-                              <ComboBox fx:id="exteriorColorComboBox" layoutX="419.0" layoutY="273.0" prefWidth="150.0" promptText="Exterior color" AnchorPane.leftAnchor="25.0" />
-                              <ComboBox fx:id="interiorTypeComboBox" layoutX="419.0" layoutY="312.0" prefWidth="150.0" promptText="Interior type" AnchorPane.leftAnchor="25.0" />
-                              <TextArea fx:id="descriptionTextArea" layoutX="418.0" layoutY="349.0" prefHeight="320.0" prefWidth="393.0" promptText="Description" AnchorPane.leftAnchor="25.0" />
-                              <Button layoutX="200.0" layoutY="67.0" mnemonicParsing="false" onAction="#onUpdateButtonAction" prefHeight="26.0" prefWidth="60.0" text="Update" AnchorPane.leftAnchor="200.0" />
-                              <Button layoutX="198.0" layoutY="107.0" mnemonicParsing="false" onAction="#onRemoveButtonAction" prefHeight="26.0" prefWidth="60.0" text="Remove" AnchorPane.leftAnchor="200.0" />
-                           </children>
-                        </AnchorPane>
-                     </items>
-                  </SplitPane>
+                <fx:include source="product-tab.fxml"/>
             </content>
           </Tab>
             <Tab text="Users">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                <fx:include source="user-tab.fxml"/>
               </content>
             </Tab>
             <Tab text="Orders">
