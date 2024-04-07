@@ -5,6 +5,8 @@ module com.kursinis.kursinisdarbas {
 
     requires org.kordamp.bootstrapfx.core;
     requires atlantafx.base;
+    requires mysql.connector.j;
+    requires java.sql;
 
 
     opens com.b6exclusiveautoboutique to javafx.fxml;

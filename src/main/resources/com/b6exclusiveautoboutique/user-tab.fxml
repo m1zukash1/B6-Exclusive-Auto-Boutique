@@ -4,12 +4,22 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="776.0" prefWidth="1049.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.b6exclusiveautoboutique.fxcontrollers.UserController">
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="776.0" prefWidth="1334.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.b6exclusiveautoboutique.fxcontrollers.UserController">
    <children>
-      <TableView prefHeight="776.0" prefWidth="518.0">
+      <TableView prefHeight="776.0" prefWidth="996.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="338.0" AnchorPane.topAnchor="0.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="Nig" />
-          <TableColumn prefWidth="75.0" text="C2" />
+            <TableColumn prefWidth="37.59997636079788" text="id" />
+          <TableColumn prefWidth="75.19997787475586" text="username" />
+          <TableColumn prefWidth="48.000030517578125" text="password" />
+            <TableColumn prefWidth="72.79998779296875" text="name" />
+            <TableColumn prefWidth="69.59999084472656" text="surname" />
+            <TableColumn prefWidth="64.79998779296875" text="creditCard" />
+            <TableColumn prefWidth="112.0" text="shippingAddress" />
+            <TableColumn prefWidth="93.5999755859375" text="billingAddress" />
+            <TableColumn prefWidth="63.20001220703125" text="orders" />
+            <TableColumn prefWidth="148.0" text="commentHistory" />
+            <TableColumn prefWidth="103.9998779296875" text="assignedOrders" />
+            <TableColumn prefWidth="106.4000244140625" text="managers" />
         </columns>
       </TableView>
    </children>

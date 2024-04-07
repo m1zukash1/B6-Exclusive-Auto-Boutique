@@ -3,10 +3,12 @@ package com.b6exclusiveautoboutique.model;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.UUID;
+
 @Getter
 @Setter
 public class Product {
-    private static int lastId = 0;
+    public static int lastId = 0;
     public enum Year {
         YEAR_2005("2005"),
         YEAR_2006("2006"),
@@ -144,8 +146,20 @@ public class Product {
     protected InteriorType interiorType;
     protected String description;
 
+    public Product(int id, Year year, float price, int mileageKm, TransmissionType transmissionType, FuelType fuelType, EngineType engineType, ExteriorColor exteriorColor, InteriorType interiorType, String description) {
+        this.id = id;
+        this.year = year;
+        this.price = price;
+        this.mileageKm = mileageKm;
+        this.transmissionType = transmissionType;
+        this.fuelType = fuelType;
+        this.engineType = engineType;
+        this.exteriorColor = exteriorColor;
+        this.interiorType = interiorType;
+        this.description = description;
+    }
     public Product(Year year, float price, int mileageKm, TransmissionType transmissionType, FuelType fuelType, EngineType engineType, ExteriorColor exteriorColor, InteriorType interiorType, String description) {
-        this.id = lastId++;
+        this.id = UUID.randomUUID().toString().hashCode();;
         this.year = year;
         this.price = price;
         this.mileageKm = mileageKm;
