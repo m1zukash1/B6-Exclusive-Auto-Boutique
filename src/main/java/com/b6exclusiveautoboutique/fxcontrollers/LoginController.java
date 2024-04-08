@@ -37,20 +37,17 @@ public class LoginController {
             String email = emailTextField.getText();
             String enteredPassword = passwordTextField.getText();
 
-            // Prepare SQL query to get the hashed password and account type for the given email
             PreparedStatement preparedStatement = databaseManager.getConnection().prepareStatement(
                     "SELECT password, account_type FROM user WHERE email = ?"
             );
             preparedStatement.setString(1, email);
 
-            // Execute the query
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                String hashedPassword = resultSet.getString("password"); // Get the hashed password
-                String accountType = resultSet.getString("account_type"); // Get the account type
+                String hashedPassword = resultSet.getString("password");
+                String accountType = resultSet.getString("account_type");
 
-                // Use PasswordManager to validate the entered password against the hashed password
                 if (PasswordManager.validatePassword(enteredPassword, hashedPassword)) {
                     System.out.println("Login Successful. Account Type: " + accountType);
 
@@ -71,7 +68,7 @@ public class LoginController {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            databaseManager.closeConnection(); // Close the database connection
+            databaseManager.closeConnection();
         }
     }
 
@@ -90,8 +87,6 @@ public class LoginController {
 
         Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
         currentStage.close();
-
-        fxmlLoader.getController(); //pass arg to initializible
 
         mainStage.show();
     }
