@@ -1,5 +1,7 @@
 package com.b6exclusiveautoboutique.fxcontrollers;
-import com.b6exclusiveautoboutique.utils.DatabaseManager;
+import com.b6exclusiveautoboutique.hibernate.GenericHibernate;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -63,8 +65,9 @@ public class ProductController implements Initializable {
     }
     private void updateProductListView() {
         productsList.clear();
-        productsList = fetchProductsFromDB();
-        productListView.setItems(productsList);
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("b6_exclusive_auto_boutique");
+        GenericHibernate genericHibernate = new GenericHibernate(entityManagerFactory);
+        productListView.setItems(FXCollections.observableArrayList(genericHibernate.getAllRecords(Product.class)));
     }
     private void updateUIControls(Product product) {
         yearComboBox.setValue(product.getYear());
@@ -96,8 +99,10 @@ public class ProductController implements Initializable {
                     interiorTypeComboBox.getValue(),
                     descriptionTextArea.getText()
             );
-            addProductToDB(product);
-            updateProductListView();
+            EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("b6_exclusive_auto_boutique");
+            GenericHibernate genericHibernate = new GenericHibernate(entityManagerFactory);
+
+            genericHibernate.create(product);
         } catch (NumberFormatException e) {
             showAlert("Input Error", "Please ensure price and mileage are valid numbers.");
         } catch (Exception e) {
@@ -129,7 +134,9 @@ public class ProductController implements Initializable {
             selectedProduct.setInteriorType(interiorTypeComboBox.getValue());
             selectedProduct.setDescription(descriptionTextArea.getText());
 
-            updateProductInDB(selectedProduct);
+            EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("b6_exclusive_auto_boutique");
+            GenericHibernate genericHibernate = new GenericHibernate(entityManagerFactory);
+            genericHibernate.update(selectedProduct);
             productListView.refresh();
 
         } catch (NumberFormatException e) {
@@ -162,7 +169,9 @@ public class ProductController implements Initializable {
             showAlert("Remove Error", "No product selected.");
             return;
         }
-        removeProductFromDB(selectedProduct);
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("b6_exclusive_auto_boutique");
+        GenericHibernate genericHibernate = new GenericHibernate(entityManagerFactory);
+        genericHibernate.delete(Product.class, selectedProduct.getId());
         updateProductListView();
     }
 
@@ -184,92 +193,4 @@ public class ProductController implements Initializable {
         interiorTypeComboBox.setValue(null);
         descriptionTextArea.clear();
     }
-
-    private void addProductToDB(Product product) throws SQLException {
-        DatabaseManager databaseManager = new DatabaseManager();
-        databaseManager.openConnection();
-
-        PreparedStatement preparedStatement = databaseManager.getConnection().prepareStatement(
-                "INSERT INTO product (year, price, mileage_km, transmission_type, fuel_type, engine_type, exterior_color, interior_type, description) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
-        );
-
-        preparedStatement.setString(1, product.getYear().name());
-        preparedStatement.setFloat(2, product.getPrice());
-        preparedStatement.setInt(3, product.getMileageKm());
-        preparedStatement.setString(4, product.getTransmissionType().name());
-        preparedStatement.setString(5, product.getFuelType().name());
-        preparedStatement.setString(6, product.getEngineType().name());
-        preparedStatement.setString(7, product.getExteriorColor().name());
-        preparedStatement.setString(8, product.getInteriorType().name());
-        preparedStatement.setString(9, product.getDescription());
-
-        databaseManager.sendPreparedStatementQuery(preparedStatement);
-        databaseManager.closeConnection();
-    }
-    private void removeProductFromDB(Product product) throws SQLException {
-        DatabaseManager databaseManager = new DatabaseManager();
-        databaseManager.openConnection();
-
-        PreparedStatement preparedStatement = databaseManager.getConnection().prepareStatement(
-                "DELETE FROM product WHERE id = ?"
-        );
-
-        preparedStatement.setInt(1, product.getId());
-        databaseManager.sendPreparedStatementQuery(preparedStatement);
-        updateProductListView();
-        databaseManager.closeConnection();
-    }
-    private void updateProductInDB(Product product) throws SQLException {
-        DatabaseManager databaseManager = new DatabaseManager();
-        databaseManager.openConnection();
-
-        PreparedStatement preparedStatement = databaseManager.getConnection().prepareStatement(
-                "UPDATE product SET year = ?, price = ?, mileage_km = ?, transmission_type = ?, fuel_type = ?, engine_type = ?, exterior_color = ?, interior_type = ?, description = ? WHERE id = ?"
-        );
-
-        preparedStatement.setString(1, product.getYear().name());
-        preparedStatement.setFloat(2, product.getPrice());
-        preparedStatement.setInt(3, product.getMileageKm());
-        preparedStatement.setString(4, product.getTransmissionType().name());
-        preparedStatement.setString(5, product.getFuelType().name());
-        preparedStatement.setString(6, product.getEngineType().name());
-        preparedStatement.setString(7, product.getExteriorColor().name());
-        preparedStatement.setString(8, product.getInteriorType().name());
-        preparedStatement.setString(9, product.getDescription());
-        preparedStatement.setInt(10, product.getId());
-
-        databaseManager.sendPreparedStatementQuery(preparedStatement);
-        databaseManager.closeConnection();
-    }
-    private ObservableList<Product> fetchProductsFromDB() {
-        DatabaseManager databaseManager = new DatabaseManager();
-        databaseManager.openConnection();
-
-        databaseManager.sendStatementQuery("SELECT * FROM product");
-        ResultSet resultSet = databaseManager.getResultSet();
-
-        try {
-            while (resultSet.next()) {
-                    Product product = new Product(
-                            resultSet.getInt("id"),
-                            Product.Year.valueOf(resultSet.getString("year")),
-                            resultSet.getFloat("price"),
-                            resultSet.getInt("mileage_km"),
-                            Product.TransmissionType.valueOf(resultSet.getString("transmission_type")),
-                            Product.FuelType.valueOf(resultSet.getString("fuel_type")),
-                            Product.EngineType.valueOf(resultSet.getString("engine_type")),
-                            Product.ExteriorColor.valueOf(resultSet.getString("exterior_color")),
-                            Product.InteriorType.valueOf(resultSet.getString("interior_type")),
-                            resultSet.getString("description")
-                    );
-                productsList.add(product);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            databaseManager.closeConnection();
-        }
-        return productsList;
-    }
-
 }

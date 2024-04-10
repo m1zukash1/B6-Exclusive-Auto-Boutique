@@ -1,12 +1,16 @@
 package com.b6exclusiveautoboutique.model;
 
+import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.UUID;
 
 @Getter
 @Setter
+@Entity
+@NoArgsConstructor
 public class Product {
     public static int lastId = 0;
     public enum Year {
@@ -135,14 +139,22 @@ public class Product {
             return displayValue;
         }
     }
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected int id;
+    @Enumerated(EnumType.STRING)
     protected Year year;
     protected float price;
     protected int mileageKm;
+    @Enumerated(EnumType.STRING)
     protected TransmissionType transmissionType;
+    @Enumerated(EnumType.STRING)
     protected FuelType fuelType;
+    @Enumerated(EnumType.STRING)
     protected EngineType engineType;
+    @Enumerated(EnumType.STRING)
     protected ExteriorColor exteriorColor;
+    @Enumerated(EnumType.STRING)
     protected InteriorType interiorType;
     protected String description;
 
@@ -159,7 +171,6 @@ public class Product {
         this.description = description;
     }
     public Product(Year year, float price, int mileageKm, TransmissionType transmissionType, FuelType fuelType, EngineType engineType, ExteriorColor exteriorColor, InteriorType interiorType, String description) {
-        this.id = UUID.randomUUID().toString().hashCode();;
         this.year = year;
         this.price = price;
         this.mileageKm = mileageKm;
@@ -175,6 +186,6 @@ public class Product {
     public String toString() {
         return year + " " + mileageKm + "Km " + transmissionType + " " +
                 fuelType + " " + engineType + " " + exteriorColor + " " +
-                interiorType + " " + price + "€";
+                interiorType + " " + price + "€" + "\n";
     }
 }
