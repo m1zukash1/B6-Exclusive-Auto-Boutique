@@ -61,6 +61,7 @@ public class ProductController implements Initializable {
                 updateUIControls(newValue);
             }
         });
+
         updateProductListView();
     }
     private void updateProductListView() {

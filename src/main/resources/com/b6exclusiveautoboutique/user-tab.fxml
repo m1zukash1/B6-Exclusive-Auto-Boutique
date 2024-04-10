@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -8,18 +9,17 @@
         <TableView fx:id="tableView" prefHeight="776.0" prefWidth="1334.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <columns>
                 <TableColumn fx:id="idColumn" prefWidth="37.59997636079788" text="id" />
-                <TableColumn fx:id="emailColumn" prefWidth="75.19997787475586" text="email" />
-                <TableColumn fx:id="passwordColumn" prefWidth="48.000030517578125" text="password" />
                 <TableColumn fx:id="nameColumn" prefWidth="72.79998779296875" text="name" />
-                <TableColumn fx:id="surnameColumn" prefWidth="69.59999084472656" text="surname" />
-                <TableColumn fx:id="creditCardColumn" prefWidth="64.79998779296875" text="creditCard" />
-                <TableColumn fx:id="shippingAddressColumn" prefWidth="112.0" text="shippingAddress" />
-                <TableColumn fx:id="billingAddressColumn" prefWidth="93.5999755859375" text="billingAddress" />
-                <TableColumn fx:id="ordersColumn" prefWidth="63.20001220703125" text="orders" />
-                <TableColumn fx:id="commentHistoryColumn" prefWidth="148.0" text="commentHistory" />
-                <TableColumn fx:id="assignedOrdersColumn" prefWidth="103.9998779296875" text="assignedOrders" />
-                <TableColumn fx:id="managersColumn" prefWidth="106.4000244140625" text="managers" />
-                <TableColumn fx:id="accountTypeColumn" prefWidth="106.4000244140625" text="accountType" />
+            <TableColumn fx:id="surnameColumn" prefWidth="72.79998779296875" text="surname" />
+                <TableColumn fx:id="commentHistoryColumn" prefWidth="148.0" text="comments" />
+                <TableColumn fx:id="passwordColumn" prefWidth="59.99993896484375" text="password" />
+                <TableColumn fx:id="emailColumn" prefWidth="101.60003662109375" text="email" />
+                <TableColumn fx:id="creditCardColumn" prefWidth="100.0" text="creditCardId" />
+                <TableColumn fx:id="shippingAddressColumn" prefWidth="128.0" text="shippingAddressId" />
+                <TableColumn fx:id="billingAddressColumn" prefWidth="103.20001220703125" text="billingAddressId" />
+                <TableColumn fx:id="assignedOrdersColumn" prefWidth="179.2000732421875" text="assignedOrdersSize" />
+                <TableColumn fx:id="managersColumn" prefWidth="119.2000732421875" text="managers" />
+                <TableColumn fx:id="accountTypeColumn" prefWidth="157.5999755859375" text="accountType" />
             </columns>
         </TableView>
     </children>

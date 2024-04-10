@@ -22,7 +22,7 @@ public class Address {
     private String city;
     private String postalCode;
 
-    @ManyToOne // Indicates a many-to-one relationship with Customer
+    @ManyToOne(cascade = CascadeType.ALL) // Indicates a many-to-one relationship with Customer
     @JoinColumn(name = "customer_id")  // Optional for clarity
     private Customer customer;
 

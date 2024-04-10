@@ -1,66 +1,124 @@
 package com.b6exclusiveautoboutique.fxcontrollers;
 
 import com.b6exclusiveautoboutique.hibernate.GenericHibernate;
+import com.b6exclusiveautoboutique.model.Admin;
+import com.b6exclusiveautoboutique.model.Customer;
+import com.b6exclusiveautoboutique.model.Manager;
 import com.b6exclusiveautoboutique.model.User;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import java.net.URL;
 import java.util.List;
+import java.util.ResourceBundle;
 
-public class UserController {
+public class UserController implements Initializable {
 
-    @FXML
-    public TableView<User> tableView;
-    @FXML
-    public TableColumn<User, Integer> idColumn;
-    @FXML
-    public TableColumn<User, String> emailColumn;
-    @FXML
-    public TableColumn<User, String> passwordColumn;
-    @FXML
-    public TableColumn<User, String> nameColumn;
-    @FXML
     public TableColumn<User, String> surnameColumn;
     @FXML
-    public TableColumn<User, String> creditCardColumn;
-    @FXML
-    public TableColumn<User, String> shippingAddressColumn;
-    @FXML
-    public TableColumn<User, String> billingAddressColumn;
-    @FXML
-    public TableColumn<User, String> ordersColumn; // Assuming this is a String, adjust according to actual type
-    @FXML
-    public TableColumn<User, String> commentHistoryColumn; // Assuming this is a String, adjust accordingly
-    @FXML
-    public TableColumn<User, String> assignedOrdersColumn; // Adjust type as needed
-    @FXML
-    public TableColumn<User, String> managersColumn; // Adjust type as needed
-    @FXML
-    public TableColumn<User, String> accountTypeColumn;
+    private TableColumn<User, String> accountTypeColumn;
 
     @FXML
-    public void initialize() {
+    private TableColumn<User, Integer> assignedOrdersColumn;
+
+    @FXML
+    private TableColumn<User, Integer> billingAddressColumn;
+
+    @FXML
+    private TableColumn<User, Integer> commentHistoryColumn;
+
+    @FXML
+    private TableColumn<User, Integer> creditCardColumn;
+
+    @FXML
+    private TableColumn<User, String > emailColumn;
+
+    @FXML
+    private TableColumn<User, Integer> idColumn;
+
+    @FXML
+    private TableColumn<User, Integer> managersColumn;
+
+    @FXML
+    private TableColumn<User, String> nameColumn;
+
+    @FXML
+    private TableColumn<User, String> passwordColumn;
+
+    @FXML
+    private TableColumn<User, Integer> shippingAddressColumn;
+
+    @FXML
+    private TableView<User> tableView;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
-        passwordColumn.setCellValueFactory(new PropertyValueFactory<>("password"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         surnameColumn.setCellValueFactory(new PropertyValueFactory<>("surname"));
-        creditCardColumn.setCellValueFactory(new PropertyValueFactory<>("creditCard"));
-        shippingAddressColumn.setCellValueFactory(new PropertyValueFactory<>("shippingAddress"));
-        billingAddressColumn.setCellValueFactory(new PropertyValueFactory<>("billingAddress"));
-        ordersColumn.setCellValueFactory(new PropertyValueFactory<>("orders")); // You might need a custom cell factory if this isn't a simple property
-        commentHistoryColumn.setCellValueFactory(new PropertyValueFactory<>("commentHistory")); // Ditto
-        assignedOrdersColumn.setCellValueFactory(new PropertyValueFactory<>("assignedOrders")); // Ditto
-        managersColumn.setCellValueFactory(new PropertyValueFactory<>("managers")); // Ditto
-        accountTypeColumn.setCellValueFactory(new PropertyValueFactory<>("accountType"));
-
-        //updateTableViewFromDB();
+        passwordColumn.setCellValueFactory(new PropertyValueFactory<>("password"));
+        creditCardColumn.setCellValueFactory(cellData -> {
+            if (cellData.getValue() instanceof Customer) {
+                Customer customer = (Customer) cellData.getValue();
+                return customer.getCreditCard() != null
+                        ? new SimpleIntegerProperty(customer.getCreditCard().getId()).asObject()
+                        : new SimpleIntegerProperty().asObject(); // Assuming a CreditCard has an ID field
+            } else {
+                return new SimpleIntegerProperty().asObject();
+            }
+        });
+        shippingAddressColumn.setCellValueFactory(cellData -> {
+            if (cellData.getValue() instanceof Customer) {
+                Customer customer = (Customer) cellData.getValue();
+                return customer.getShippingAddress() != null
+                        ? new SimpleIntegerProperty(customer.getShippingAddress().getId()).asObject() // Corrected part
+                        : new SimpleIntegerProperty().asObject();
+            } else {
+                return new SimpleIntegerProperty().asObject();
+            }
+        });
+        billingAddressColumn.setCellValueFactory(cellData -> {
+            if (cellData.getValue() instanceof Customer) {
+                Customer customer = (Customer) cellData.getValue();
+                return customer.getBillingAddress() != null
+                        ? new SimpleIntegerProperty(customer.getBillingAddress().getId()).asObject() // Corrected part
+                        : new SimpleIntegerProperty().asObject();
+            } else {
+                return new SimpleIntegerProperty().asObject();
+            }
+        });
+        assignedOrdersColumn.setCellValueFactory(cellData -> {
+            if (cellData.getValue() instanceof Manager) {
+                Manager manager = (Manager) cellData.getValue();
+                return new SimpleIntegerProperty(manager.getAssignedOrders().size()).asObject();
+            } else {
+                return new SimpleIntegerProperty().asObject();
+            }
+        });
+        accountTypeColumn.setCellValueFactory(cellData -> {
+            User user = cellData.getValue();
+            if (user instanceof Customer) {
+                return new SimpleStringProperty("Customer");
+            } else if (user instanceof Admin) {
+                return new SimpleStringProperty("Admin");
+            } else if (user instanceof Manager) {
+                return new SimpleStringProperty("Manager");
+            } else {
+                return new SimpleStringProperty("User");
+            }
+        });
+        updateTableViewFromDB();
     }
 
     public void updateTableViewFromDB() {

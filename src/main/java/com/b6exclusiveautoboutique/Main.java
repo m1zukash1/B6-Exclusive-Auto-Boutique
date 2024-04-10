@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -57,10 +58,10 @@ public class Main extends Application {
         testCustomer.setShippingAddress(testAddress);
         testCustomer.setBillingAddress(testAddress);
 
-
-
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("b6_exclusive_auto_boutique");
         GenericHibernate genericHibernate = new GenericHibernate(entityManagerFactory);
+
+
     }
 
     public static void main(String[] args) {

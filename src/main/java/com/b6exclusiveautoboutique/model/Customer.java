@@ -16,10 +16,28 @@ import java.util.List;
 public class Customer extends User{
     @OneToOne(cascade = CascadeType.ALL)
     private CreditCard creditCard;
-    @ManyToOne(cascade = CascadeType.ALL) // Reuse Address class
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "shipping_address_id")
     private Address shippingAddress;
-    @ManyToOne(cascade = CascadeType.ALL) // Reuse Address class
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "billing_address_id")
     private Address billingAddress;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Order> orders;
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "creditCard=" + creditCard +
+                ", shippingAddress=" + shippingAddress +
+                ", billingAddress=" + billingAddress +
+                ", orders=" + orders +
+                ", id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", comments=" + comments +
+                '}';
+    }
 }
