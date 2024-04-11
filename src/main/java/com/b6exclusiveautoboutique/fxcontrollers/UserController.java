@@ -1,5 +1,6 @@
 package com.b6exclusiveautoboutique.fxcontrollers;
 
+import com.b6exclusiveautoboutique.Main;
 import com.b6exclusiveautoboutique.hibernate.GenericHibernate;
 import com.b6exclusiveautoboutique.model.Admin;
 import com.b6exclusiveautoboutique.model.Customer;
@@ -12,14 +13,23 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class UserController implements Initializable {
@@ -127,5 +137,98 @@ public class UserController implements Initializable {
         List<User> userList = genericHibernate.getAllRecords(User.class);
         ObservableList<User> userObservableList = FXCollections.observableArrayList(userList);
         tableView.setItems(userObservableList);
+    }
+
+    public void onChangeNameMenuItemPressed(ActionEvent actionEvent) {
+        User selectedUser = tableView.getSelectionModel().getSelectedItem();
+
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Change name");
+        dialog.setHeaderText("Change user name");
+        dialog.setContentText("Enter new name");
+
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent()) {
+            EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("b6_exclusive_auto_boutique");
+            GenericHibernate genericHibernate = new GenericHibernate(entityManagerFactory);
+            selectedUser.setName(result.get());
+            genericHibernate.update(selectedUser);
+            updateTableViewFromDB();
+        }
+    }
+
+    public void onChangeSurnameMenuItemPressed(ActionEvent actionEvent) {
+        User selectedUser = tableView.getSelectionModel().getSelectedItem();
+
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Change surname");
+        dialog.setHeaderText("Change user surname");
+        dialog.setContentText("Enter new surname");
+
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent()) {
+            EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("b6_exclusive_auto_boutique");
+            GenericHibernate genericHibernate = new GenericHibernate(entityManagerFactory);
+            selectedUser.setSurname(result.get());
+            genericHibernate.update(selectedUser);
+            updateTableViewFromDB();
+        }
+    }
+
+
+    public void onChangePasswordMenuItemPressed(ActionEvent actionEvent) {
+        User selectedUser = tableView.getSelectionModel().getSelectedItem();
+
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Change password");
+        dialog.setHeaderText("Change user password");
+        dialog.setContentText("Enter new password");
+
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent()) {
+            EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("b6_exclusive_auto_boutique");
+            GenericHibernate genericHibernate = new GenericHibernate(entityManagerFactory);
+            selectedUser.setPassword(result.get());
+            genericHibernate.update(selectedUser);
+            updateTableViewFromDB();
+        }
+    }
+
+
+    public void onChangeEmailMenuItemPressed(ActionEvent actionEvent) {
+        User selectedUser = tableView.getSelectionModel().getSelectedItem();
+
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Change email");
+        dialog.setHeaderText("Change user email");
+        dialog.setContentText("Enter new email");
+
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent()) {
+            EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("b6_exclusive_auto_boutique");
+            GenericHibernate genericHibernate = new GenericHibernate(entityManagerFactory);
+            selectedUser.setEmail(result.get());
+            genericHibernate.update(selectedUser);
+            updateTableViewFromDB();
+        }
+    }
+
+    public void onCreateNewUserMenuItemPressed(ActionEvent actionEvent) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("create-user-window.fxml"));
+        Scene mainScene = new Scene(fxmlLoader.load(), 340, 400);
+        Stage mainStage = new Stage();
+        mainStage.setTitle("Create new user");
+        mainStage.setScene(mainScene);
+        mainStage.initModality(Modality.APPLICATION_MODAL);
+        mainStage.showAndWait();
+        updateTableViewFromDB();
+    }
+
+    public void onDeleteSelectedUserMenuItemPressed(ActionEvent actionEvent) {
+        User selectedUser = tableView.getSelectionModel().getSelectedItem();
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("b6_exclusive_auto_boutique");
+        GenericHibernate genericHibernate = new GenericHibernate(entityManagerFactory);
+        genericHibernate.delete(selectedUser.getClass(), selectedUser.getId());
+        updateTableViewFromDB();
     }
 }
