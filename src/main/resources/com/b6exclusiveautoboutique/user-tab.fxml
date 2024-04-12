@@ -12,11 +12,11 @@
             <columns>
                 <TableColumn fx:id="idColumn" prefWidth="37.59997636079788" text="id" />
                 <TableColumn fx:id="nameColumn" prefWidth="64.79998397827148" text="name" />
-            <TableColumn fx:id="surnameColumn" prefWidth="119.20001220703125" text="surname" />
-                <TableColumn fx:id="commentHistoryColumn" prefWidth="114.39997863769531" text="comments" />
+            <TableColumn fx:id="surnameColumn" prefWidth="106.4000244140625" text="surname" />
+                <TableColumn fx:id="commentHistoryColumn" prefWidth="128.00001525878906" text="comments" />
                 <TableColumn fx:id="passwordColumn" prefWidth="59.99993896484375" text="password" />
-                <TableColumn fx:id="emailColumn" prefWidth="101.60003662109375" text="email" />
-                <TableColumn fx:id="creditCardColumn" prefWidth="100.0" text="creditCardId" />
+                <TableColumn fx:id="emailColumn" prefWidth="98.4000244140625" text="email" />
+                <TableColumn fx:id="creditCardColumn" prefWidth="104.0" text="creditCardId" />
                 <TableColumn fx:id="shippingAddressColumn" prefWidth="128.0" text="shippingAddressId" />
                 <TableColumn fx:id="billingAddressColumn" prefWidth="103.20001220703125" text="billingAddressId" />
                 <TableColumn fx:id="assignedOrdersColumn" prefWidth="179.2000732421875" text="assignedOrdersSize" />
@@ -32,6 +32,7 @@
                   <MenuItem mnemonicParsing="false" onAction="#onChangeEmailMenuItemPressed" text="Change email" />
                   <MenuItem mnemonicParsing="false" onAction="#onCreateNewUserMenuItemPressed" text="Create new user" />
                   <MenuItem mnemonicParsing="false" onAction="#onDeleteSelectedUserMenuItemPressed" text="Delete selected user" />
+                  <MenuItem mnemonicParsing="false" onAction="#onViewCreditCardInformationMenuItemPressed" text="View credit card information" />
               </items>
             </ContextMenu>
          </contextMenu>

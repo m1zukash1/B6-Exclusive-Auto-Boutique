@@ -19,6 +19,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextInputDialog;
@@ -230,5 +231,30 @@ public class UserController implements Initializable {
         GenericHibernate genericHibernate = new GenericHibernate(entityManagerFactory);
         genericHibernate.delete(selectedUser.getClass(), selectedUser.getId());
         updateTableViewFromDB();
+    }
+
+    public void onViewCreditCardInformationMenuItemPressed(ActionEvent actionEvent) throws IOException {
+        User selectedUser = tableView.getSelectionModel().getSelectedItem();
+        if (selectedUser.getClass() != Customer.class) {
+            showAlert("Wrong user selected", "This option is only available for customers");
+            return;
+        }
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("credit-card-window.fxml"));
+        Scene mainScene = new Scene(fxmlLoader.load(), 340, 400);
+        Stage mainStage = new Stage();
+        mainStage.setTitle("Credit card information");
+        mainStage.setScene(mainScene);
+        mainStage.initModality(Modality.APPLICATION_MODAL);
+        CreditCardInfoController controller = fxmlLoader.getController();
+        controller.init((Customer) selectedUser);
+        mainStage.showAndWait();
+    }
+
+    private void showAlert(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 }

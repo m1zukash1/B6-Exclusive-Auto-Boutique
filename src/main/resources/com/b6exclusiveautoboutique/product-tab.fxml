@@ -26,7 +26,7 @@
                  <ComboBox fx:id="engineTypeComboBox" layoutX="419.0" layoutY="232.0" prefWidth="150.0" promptText="Engine type" AnchorPane.leftAnchor="25.0" />
                  <ComboBox fx:id="exteriorColorComboBox" layoutX="419.0" layoutY="273.0" prefWidth="150.0" promptText="Exterior color" AnchorPane.leftAnchor="25.0" />
                  <ComboBox fx:id="interiorTypeComboBox" layoutX="419.0" layoutY="312.0" prefWidth="150.0" promptText="Interior type" AnchorPane.leftAnchor="25.0" />
-                 <TextArea fx:id="descriptionTextArea" layoutX="418.0" layoutY="349.0" prefHeight="320.0" prefWidth="393.0" promptText="Description" AnchorPane.leftAnchor="25.0" />
+                 <TextArea fx:id="descriptionTextArea" layoutX="418.0" layoutY="349.0" prefHeight="545.0" prefWidth="529.0" promptText="Description" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="347.20000000000005" />
                  <Button layoutX="200.0" layoutY="67.0" mnemonicParsing="false" onAction="#onUpdateButtonAction" prefHeight="26.0" prefWidth="60.0" text="Update" AnchorPane.leftAnchor="200.0" />
                  <Button layoutX="198.0" layoutY="107.0" mnemonicParsing="false" onAction="#onRemoveButtonAction" prefHeight="26.0" prefWidth="60.0" text="Remove" AnchorPane.leftAnchor="200.0" />
              </children>
