@@ -1,4 +1,4 @@
-package com.b6exclusiveautoboutique.fxcontrollers;
+package com.b6exclusiveautoboutique.fxcontrollers.usercontrollers;
 
 import com.b6exclusiveautoboutique.Main;
 import com.b6exclusiveautoboutique.hibernate.GenericHibernate;
@@ -8,7 +8,6 @@ import com.b6exclusiveautoboutique.model.Manager;
 import com.b6exclusiveautoboutique.model.User;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -17,7 +16,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;

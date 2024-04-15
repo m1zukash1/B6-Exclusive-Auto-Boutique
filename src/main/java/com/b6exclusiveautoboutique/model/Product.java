@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -157,6 +158,8 @@ public class Product {
     @Enumerated(EnumType.STRING)
     protected InteriorType interiorType;
     protected String description;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    protected List<Comment> comments;
 
     public Product(int id, Year year, float price, int mileageKm, TransmissionType transmissionType, FuelType fuelType, EngineType engineType, ExteriorColor exteriorColor, InteriorType interiorType, String description) {
         this.id = id;

@@ -1,4 +1,4 @@
-package com.b6exclusiveautoboutique.fxcontrollers;
+package com.b6exclusiveautoboutique.fxcontrollers.usercontrollers;
 
 import com.b6exclusiveautoboutique.hibernate.GenericHibernate;
 import com.b6exclusiveautoboutique.model.Customer;

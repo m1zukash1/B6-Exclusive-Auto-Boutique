@@ -1,10 +1,7 @@
-package com.b6exclusiveautoboutique.fxcontrollers;
+package com.b6exclusiveautoboutique.fxcontrollers.usercontrollers;
 
 import com.b6exclusiveautoboutique.hibernate.GenericHibernate;
-import com.b6exclusiveautoboutique.model.Admin;
-import com.b6exclusiveautoboutique.model.Customer;
-import com.b6exclusiveautoboutique.model.Manager;
-import com.b6exclusiveautoboutique.model.User;
+import com.b6exclusiveautoboutique.model.*;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import javafx.event.ActionEvent;

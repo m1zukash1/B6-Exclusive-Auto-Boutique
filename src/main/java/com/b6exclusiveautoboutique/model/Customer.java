@@ -6,12 +6,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Setter
 @Getter
-@NoArgsConstructor
 @AllArgsConstructor
 public class Customer extends User{
     @OneToOne(cascade = CascadeType.ALL)
@@ -22,8 +22,10 @@ public class Customer extends User{
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "billing_address_id")
     private Address billingAddress;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Order> orders;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Cart cart;
 
     @Override
     public String toString() {
@@ -39,5 +41,12 @@ public class Customer extends User{
                 ", password='" + password + '\'' +
                 ", comments=" + comments +
                 '}';
+    }
+
+    public Customer() {
+        this.creditCard = new CreditCard();
+        this.billingAddress = new Address();
+        this.shippingAddress = new Address();
+        this.orders = new ArrayList<Order>();
     }
 }

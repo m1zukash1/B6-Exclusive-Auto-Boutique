@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="836.0" prefWidth="1358.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.b6exclusiveautoboutique.fxcontrollers.OrderController">
+   <children>
+      <TableView fx:id="tableView" layoutX="182.0" layoutY="90.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <columns>
+          <TableColumn fx:id="idColumn" prefWidth="75.0" text="id" />
+          <TableColumn fx:id="orderStatusColumn" prefWidth="135.20001220703125" text="orderStatus" />
+            <TableColumn fx:id="assignedManagerIdColumn" minWidth="0.0" prefWidth="252.79994201660156" text="assignedManagerId" />
+            <TableColumn fx:id="productColumn" minWidth="0.0" prefWidth="708.7999267578125" text="product" />
+            <TableColumn fx:id="orderDateColumn" minWidth="0.0" prefWidth="180.800048828125" text="orderDate" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

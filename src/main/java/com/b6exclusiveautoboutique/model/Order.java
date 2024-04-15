@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Entity
 @Setter
 @Getter
@@ -26,4 +28,7 @@ public class Order {
     private Manager assignedManager;
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus = OrderStatus.PENDING;
+    @OneToOne
+    private Product product;
+    private LocalDate orderDate;
 }

@@ -102,8 +102,8 @@ public class ProductController implements Initializable {
             );
             EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("b6_exclusive_auto_boutique");
             GenericHibernate genericHibernate = new GenericHibernate(entityManagerFactory);
-
             genericHibernate.create(product);
+            updateProductListView();
         } catch (NumberFormatException e) {
             showAlert("Input Error", "Please ensure price and mileage are valid numbers.");
         } catch (Exception e) {
