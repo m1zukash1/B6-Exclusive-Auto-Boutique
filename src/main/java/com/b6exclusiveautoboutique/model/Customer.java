@@ -22,10 +22,8 @@ public class Customer extends User{
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "billing_address_id")
     private Address billingAddress;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "customer")
     private List<Order> orders;
-    @OneToOne(cascade = CascadeType.ALL)
-    private Cart cart;
 
     @Override
     public String toString() {

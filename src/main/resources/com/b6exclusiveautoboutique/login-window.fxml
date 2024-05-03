@@ -16,8 +16,8 @@
                   <TextField fx:id="surnameTextField" alignment="TOP_LEFT" layoutX="236.0" layoutY="64.0" promptText="Surname" />
                </children>
             </HBox>
-            <TextField fx:id="emailTextField" promptText="Email" />
-            <TextField fx:id="passwordTextField" layoutX="10.0" layoutY="232.0" promptText="Password" />
+            <TextField fx:id="emailTextField" promptText="Email" text="admin@admin.com" />
+            <TextField fx:id="passwordTextField" layoutX="10.0" layoutY="232.0" promptText="Password" text="admin" />
             <HBox alignment="CENTER" prefHeight="0.0" prefWidth="299.0" spacing="25.0">
                <children>
                   <Button mnemonicParsing="false" onAction="#onLoginButtonPressed" text="Login" />

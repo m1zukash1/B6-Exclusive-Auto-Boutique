@@ -194,4 +194,8 @@ public class ProductController implements Initializable {
         interiorTypeComboBox.setValue(null);
         descriptionTextArea.clear();
     }
+
+    public void onRefreshButtonAction(ActionEvent actionEvent) {
+        updateProductListView();
+    }
 }

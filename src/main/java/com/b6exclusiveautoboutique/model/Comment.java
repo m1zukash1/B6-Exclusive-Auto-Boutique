@@ -29,5 +29,11 @@ public class Comment {
     @ManyToOne
     private Comment parentComment;
     @ManyToOne
+    @JoinColumn(name = "product_id")  // make sure this matches the database column
     private Product product;
+
+    @Override
+    public String toString() {
+        return title + "\n" + commentBody;
+    }
 }

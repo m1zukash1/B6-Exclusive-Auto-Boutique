@@ -1,6 +1,7 @@
 package com.b6exclusiveautoboutique.fxcontrollers.usercontrollers;
 
 import com.b6exclusiveautoboutique.Main;
+import com.b6exclusiveautoboutique.fxcontrollers.LoginController;
 import com.b6exclusiveautoboutique.hibernate.GenericHibernate;
 import com.b6exclusiveautoboutique.model.Admin;
 import com.b6exclusiveautoboutique.model.Customer;
@@ -130,6 +131,14 @@ public class UserController implements Initializable {
         updateTableViewFromDB();
     }
 
+    public boolean validateIfAdmin() {
+        if (LoginController.connectedUser.getClass() != Admin.class) {
+            showAlert("ERROR", "YOU ARE NOT THE ADMIN!");
+            return false;
+        }
+        return true;
+    }
+
     public void updateTableViewFromDB() {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("b6_exclusive_auto_boutique");
         GenericHibernate genericHibernate = new GenericHibernate(entityManagerFactory);
@@ -139,6 +148,10 @@ public class UserController implements Initializable {
     }
 
     public void onChangeNameMenuItemPressed(ActionEvent actionEvent) {
+        if (!validateIfAdmin()) {
+            return;
+        }
+
         User selectedUser = tableView.getSelectionModel().getSelectedItem();
 
         TextInputDialog dialog = new TextInputDialog();
@@ -157,6 +170,10 @@ public class UserController implements Initializable {
     }
 
     public void onChangeSurnameMenuItemPressed(ActionEvent actionEvent) {
+        if (!validateIfAdmin()) {
+            return;
+        }
+
         User selectedUser = tableView.getSelectionModel().getSelectedItem();
 
         TextInputDialog dialog = new TextInputDialog();
@@ -176,6 +193,10 @@ public class UserController implements Initializable {
 
 
     public void onChangePasswordMenuItemPressed(ActionEvent actionEvent) {
+        if (!validateIfAdmin()) {
+            return;
+        }
+
         User selectedUser = tableView.getSelectionModel().getSelectedItem();
 
         TextInputDialog dialog = new TextInputDialog();
@@ -195,6 +216,10 @@ public class UserController implements Initializable {
 
 
     public void onChangeEmailMenuItemPressed(ActionEvent actionEvent) {
+        if (!validateIfAdmin()) {
+            return;
+        }
+
         User selectedUser = tableView.getSelectionModel().getSelectedItem();
 
         TextInputDialog dialog = new TextInputDialog();
@@ -213,6 +238,10 @@ public class UserController implements Initializable {
     }
 
     public void onCreateNewUserMenuItemPressed(ActionEvent actionEvent) throws IOException {
+        if (!validateIfAdmin()) {
+            return;
+        }
+
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("create-user-window.fxml"));
         Scene mainScene = new Scene(fxmlLoader.load(), 340, 400);
         Stage mainStage = new Stage();
@@ -224,6 +253,10 @@ public class UserController implements Initializable {
     }
 
     public void onDeleteSelectedUserMenuItemPressed(ActionEvent actionEvent) {
+        if (!validateIfAdmin()) {
+            return;
+        }
+
         User selectedUser = tableView.getSelectionModel().getSelectedItem();
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("b6_exclusive_auto_boutique");
         GenericHibernate genericHibernate = new GenericHibernate(entityManagerFactory);
@@ -232,6 +265,10 @@ public class UserController implements Initializable {
     }
 
     public void onViewCreditCardInformationMenuItemPressed(ActionEvent actionEvent) throws IOException {
+        if (!validateIfAdmin()) {
+            return;
+        }
+
         User selectedUser = tableView.getSelectionModel().getSelectedItem();
         if (selectedUser.getClass() != Customer.class) {
             showAlert("Wrong user selected", "This option is only available for customers");

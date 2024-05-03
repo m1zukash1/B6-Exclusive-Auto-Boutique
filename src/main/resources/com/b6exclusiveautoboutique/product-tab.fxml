@@ -44,6 +44,7 @@
                              <Button mnemonicParsing="false" onAction="#onAddButtonAction" prefHeight="33.0" prefWidth="100.0" text="Add" />
                              <Button mnemonicParsing="false" onAction="#onUpdateButtonAction" prefHeight="26.0" prefWidth="100.0" text="Update" />
                              <Button mnemonicParsing="false" onAction="#onRemoveButtonAction" prefHeight="26.0" prefWidth="100.0" text="Remove" />
+                        <Button layoutX="81.0" layoutY="126.0" mnemonicParsing="false" onAction="#onRefreshButtonAction" prefHeight="26.0" prefWidth="100.0" text="Refresh" />
                      </children>
                   </VBox>
                </children>

@@ -19,5 +19,4 @@ import java.util.List;
 public class Manager extends User{
     @OneToMany(mappedBy = "assignedManager", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Order> assignedOrders;
-
 }

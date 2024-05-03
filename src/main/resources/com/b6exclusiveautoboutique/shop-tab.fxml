@@ -13,11 +13,12 @@
    <children>
       <ListView fx:id="productListView" layoutX="15.0" layoutY="75.0" prefHeight="758.0" prefWidth="624.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="75.0" />
       <Button alignment="CENTER" layoutX="726.0" layoutY="800.0" mnemonicParsing="false" onAction="#onBuyButtonPressed" text="Buy" />
-      <TreeView fx:id="commentTreeView" layoutX="952.0" layoutY="212.0" prefHeight="758.0" prefWidth="187.0" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="75.0">
+      <TreeView fx:id="commentTreeView" layoutX="952.0" layoutY="212.0" prefHeight="758.0" prefWidth="400.0" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="75.0">
          <contextMenu>
             <ContextMenu>
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#onAddCommentMenuItemPressed" text="Add comment" />
+                  <MenuItem mnemonicParsing="false" onAction="#onDeleteCommentMenuItemPressed" text="Delete comment" />
               </items>
             </ContextMenu>
          </contextMenu></TreeView>
@@ -31,5 +32,6 @@
             <Font size="24.0" />
          </font>
       </Text>
+      <Button alignment="CENTER" layoutX="831.0" layoutY="800.0" mnemonicParsing="false" onAction="#onRefreshButtonPressed" text="Refresh" />
    </children>
 </AnchorPane>

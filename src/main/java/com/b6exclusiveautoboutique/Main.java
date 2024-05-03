@@ -29,6 +29,7 @@ public class Main extends Application {
         stage.setTitle("B6 Exclusive Auto Boutique");
         stage.setScene(scene);
         stage.show();
+        System.out.println( PasswordManager.generatePBKDF2WithHmacSHA1Password("customer"));
     }
 
     public static void main(String[] args) {

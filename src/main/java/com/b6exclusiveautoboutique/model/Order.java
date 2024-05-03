@@ -24,11 +24,15 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @ManyToOne
-    private Manager assignedManager;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "assigned_manager_id")
+    private Manager assignedManager = null;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "customer_id")  // This annotation adds the foreign key column to Order table
+    private Customer customer;
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus = OrderStatus.PENDING;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Product product;
     private LocalDate orderDate;
 }

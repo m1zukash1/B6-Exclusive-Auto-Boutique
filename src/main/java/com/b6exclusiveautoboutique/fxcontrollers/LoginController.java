@@ -2,6 +2,7 @@ package com.b6exclusiveautoboutique.fxcontrollers;
 
 import com.b6exclusiveautoboutique.Main;
 import com.b6exclusiveautoboutique.hibernate.GenericHibernate;
+import com.b6exclusiveautoboutique.model.Customer;
 import com.b6exclusiveautoboutique.model.User;
 import com.b6exclusiveautoboutique.utils.DatabaseManager;
 import com.b6exclusiveautoboutique.utils.PasswordManager;
@@ -13,6 +14,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -72,9 +74,9 @@ public class LoginController {
                             loginAsAdmin(event);
                             break;
                         case "Customer":
-                            loginAsAdmin(event);
+                            loginAsCustomer(event);
                         case "Manager":
-                            // Add navigation logic for other user types if necessary
+                            loginAsManager(event);
                             break;
                         default:
                             // Handle unknown user type if necessary
@@ -112,8 +114,50 @@ public class LoginController {
 
     @FXML
     void onRegisterButtonPressed(ActionEvent event) {
+        String name = nameTextField.getText();
+        String surname = surnameTextField.getText();
+        String email = emailTextField.getText();
+        String password = passwordTextField.getText();
 
+        if (name.isEmpty() || surname.isEmpty() || email.isEmpty() || password.isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, "Registration Error", "All fields are required.");
+            return;
+        }
+
+        if (!email.matches("^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$")) {
+            showAlert(Alert.AlertType.ERROR, "Registration Error", "Enter a valid email address.");
+            return;
+        }
+
+        String hashedPassword = PasswordManager.generatePBKDF2WithHmacSHA1Password(password);
+        Customer customer = new Customer();
+        customer.setName(name);
+        customer.setSurname(surname);
+        customer.setEmail(email);
+        customer.setPassword(hashedPassword);
+
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("b6_exclusive_auto_boutique");
+        GenericHibernate genericHibernate = new GenericHibernate(entityManagerFactory);
+        EntityManager entityManager = genericHibernate.getEntityManager();
+
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.persist(customer);
+            entityManager.getTransaction().commit();
+
+            showAlert(Alert.AlertType.INFORMATION, "Registration Success", "Registration successful!");
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (entityManager.getTransaction().isActive()) {
+                entityManager.getTransaction().rollback();
+            }
+            showAlert(Alert.AlertType.ERROR, "Registration Error", "Failed to register due to an error: " + e.getMessage());
+        } finally {
+            entityManager.close();
+            entityManagerFactory.close();
+        }
     }
+
 
     void loginAsAdmin(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("main-window.fxml"));
@@ -126,5 +170,43 @@ public class LoginController {
         currentStage.close();
 
         mainStage.show();
+    }
+
+    void loginAsManager(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("main-window.fxml"));
+        Scene mainScene = new Scene(fxmlLoader.load(), 1600, 900);
+        Stage mainStage = new Stage();
+        mainStage.setTitle("Manager View");
+        mainStage.setScene(mainScene);
+
+        Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+        currentStage.close();
+
+        mainStage.show();
+    }
+
+    void loginAsCustomer(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("main-window.fxml"));
+        Scene mainScene = new Scene(fxmlLoader.load(), 1600, 900);
+        MainWindowController controller = fxmlLoader.getController();
+        controller.setCustomerView();  // Set the view to customer mode
+
+        Stage mainStage = new Stage();
+        mainStage.setTitle("Customer View");
+        mainStage.setScene(mainScene);
+
+        Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+        currentStage.close();
+
+        mainStage.show();
+    }
+
+
+    private void showAlert(Alert.AlertType alertType, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

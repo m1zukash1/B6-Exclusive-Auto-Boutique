@@ -6,11 +6,11 @@
 
 <AnchorPane minHeight="600.0" minWidth="800.0" prefHeight="720.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.b6exclusiveautoboutique.fxcontrollers.MainWindowController">
    <children>
-      <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="384.0" minWidth="800.0" prefHeight="720.0" prefWidth="920.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <TabPane fx:id="tabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="384.0" minWidth="800.0" prefHeight="720.0" prefWidth="920.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
             <Tab text="Shop">
               <content>
-                <fx:include source="shop-tab.fxml"/>
+                <fx:include fx:id="shopController" source="shop-tab.fxml" />
               </content>
             </Tab>
           <Tab text="Products">
@@ -25,7 +25,7 @@
             </Tab>
             <Tab text="Orders">
               <content>
-                <fx:include source="order-tab.fxml"/>
+                <fx:include source="order-tab.fxml" />
               </content>
             </Tab>
         </tabs>

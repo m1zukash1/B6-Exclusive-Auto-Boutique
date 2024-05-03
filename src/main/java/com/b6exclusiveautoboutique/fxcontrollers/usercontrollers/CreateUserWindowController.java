@@ -2,6 +2,7 @@ package com.b6exclusiveautoboutique.fxcontrollers.usercontrollers;
 
 import com.b6exclusiveautoboutique.hibernate.GenericHibernate;
 import com.b6exclusiveautoboutique.model.*;
+import com.b6exclusiveautoboutique.utils.PasswordManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import javafx.event.ActionEvent;
@@ -61,7 +62,7 @@ public class CreateUserWindowController implements Initializable {
             newUser.setName(nameTextField.getText());
             newUser.setSurname(surnameTextField.getText());
             newUser.setEmail(emailTextField.getText());
-            newUser.setPassword(passwordTextField.getText());
+            newUser.setPassword(PasswordManager.generatePBKDF2WithHmacSHA1Password(passwordTextField.getText()));
             EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("b6_exclusive_auto_boutique");
             GenericHibernate genericHibernate = new GenericHibernate(entityManagerFactory);
             genericHibernate.create(newUser);
