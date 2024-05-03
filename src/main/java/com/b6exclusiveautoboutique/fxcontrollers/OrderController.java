@@ -36,16 +36,13 @@ public class OrderController implements Initializable {
     public ComboBox<Order.OrderStatus> statusComboBox;
     public ComboBox productYearComboBox;
     public List<Order> orders = null;
+    public TableColumn<Order, String> messageForMechantColumn;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         orderStatusColumn.setCellValueFactory(new PropertyValueFactory<>("orderStatus"));
-        assignedManagerIdColumn.setCellValueFactory(cellData -> {
-            Order order = cellData.getValue();
-            Manager manager = order.getAssignedManager();
-            return new ReadOnlyObjectWrapper<>(manager != null ? manager.getId() : null);
-        });
+        messageForMechantColumn.setCellValueFactory(new PropertyValueFactory<>("message"));
         productColumn.setCellValueFactory(cellData -> {
             Product product = cellData.getValue().getProduct();
             return new ReadOnlyObjectWrapper<>(product).asString();
@@ -66,7 +63,7 @@ public class OrderController implements Initializable {
 
     private void filterOrdersByProductYear(Product.Year year) {
         if (year == null) {
-            updateTableViewFromDB(); // Show all if no year is selected
+            updateTableViewFromDB();
         } else {
             List<Order> filteredOrders = orders.stream()
                     .filter(o -> o.getProduct().getYear() == year)
@@ -106,7 +103,7 @@ public class OrderController implements Initializable {
     }
     private void filterOrdersByStatus(Order.OrderStatus status) {
         if (status == null) {
-            updateTableViewFromDB(); // Show all if no status is selected
+            updateTableViewFromDB();
         } else {
             EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("b6_exclusive_auto_boutique");
             GenericHibernate genericHibernate = new GenericHibernate(entityManagerFactory);
@@ -190,12 +187,10 @@ public class OrderController implements Initializable {
         dialog.setTitle("Change Order Status");
         dialog.setHeaderText("Select the new status for the order:");
 
-        // Set up a ComboBox for the OrderStatus options
         ComboBox<Order.OrderStatus> statusComboBox = new ComboBox<>();
         statusComboBox.getItems().setAll(Order.OrderStatus.values());
         statusComboBox.setValue(selectedOrder.getOrderStatus());
 
-        // Create a custom dialog layout
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
@@ -204,10 +199,8 @@ public class OrderController implements Initializable {
 
         dialog.getDialogPane().setContent(grid);
 
-        // Add buttons to the dialog
         dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
 
-        // Convert the result to a OrderStatus when the OK button is clicked
         dialog.setResultConverter(new Callback<ButtonType, Order.OrderStatus>() {
             @Override
             public Order.OrderStatus call(ButtonType b) {
@@ -218,10 +211,8 @@ public class OrderController implements Initializable {
             }
         });
 
-        // Show the dialog and capture the result
         Optional<Order.OrderStatus> result = dialog.showAndWait();
 
-        // Process the result
         if (result.isPresent()) {
             EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("b6_exclusive_auto_boutique");
             GenericHibernate genericHibernate = new GenericHibernate(entityManagerFactory);

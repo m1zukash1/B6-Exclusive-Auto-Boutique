@@ -4,12 +4,14 @@
 <?import javafx.scene.control.ContextMenu?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TreeView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="848.0" prefWidth="1361.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.b6exclusiveautoboutique.fxcontrollers.ShopController">
+<AnchorPane prefHeight="848.0" prefWidth="1437.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.b6exclusiveautoboutique.fxcontrollers.ShopController">
    <children>
       <ListView fx:id="productListView" layoutX="15.0" layoutY="75.0" prefHeight="758.0" prefWidth="624.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="75.0" />
       <Button alignment="CENTER" layoutX="726.0" layoutY="800.0" mnemonicParsing="false" onAction="#onBuyButtonPressed" text="Buy" />
@@ -33,5 +35,10 @@
          </font>
       </Text>
       <Button alignment="CENTER" layoutX="831.0" layoutY="800.0" mnemonicParsing="false" onAction="#onRefreshButtonPressed" text="Refresh" />
+      <TextArea fx:id="messageTextArea" layoutX="687.0" layoutY="75.0" prefHeight="200.0" prefWidth="200.0" promptText="Short message for merchant" />
+      <TextField layoutX="687.0" layoutY="377.0" promptText="CC" text="1234 5678 9012 1234" />
+      <TextField layoutX="687.0" layoutY="421.0" promptText="CVC" text="123" />
+      <TextField layoutX="687.0" layoutY="465.0" promptText="Ending month (format MM/YY)" text="01/27" />
+      <TextField fx:id="nameTextField" layoutX="687.0" layoutY="333.0" promptText="Name" text="John Johnes" />
    </children>
 </AnchorPane>

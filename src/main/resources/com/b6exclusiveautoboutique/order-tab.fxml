@@ -15,7 +15,7 @@
         <columns>
           <TableColumn fx:id="idColumn" prefWidth="75.0" text="id" />
           <TableColumn fx:id="orderStatusColumn" prefWidth="135.20001220703125" text="orderStatus" />
-            <TableColumn fx:id="assignedManagerIdColumn" minWidth="0.0" prefWidth="268.8000030517578" text="assignedManagerId" />
+            <TableColumn fx:id="messageForMechantColumn" minWidth="0.0" prefWidth="268.8000030517578" text="Message for merchant" />
             <TableColumn fx:id="productColumn" minWidth="0.0" prefWidth="520.7999267578125" text="product" />
             <TableColumn fx:id="orderDateColumn" minWidth="0.0" prefWidth="354.39996337890625" text="orderDate" />
         </columns>

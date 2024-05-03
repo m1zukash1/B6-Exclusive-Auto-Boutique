@@ -28,11 +28,12 @@ public class Order {
     @JoinColumn(name = "assigned_manager_id")
     private Manager assignedManager = null;
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "customer_id")  // This annotation adds the foreign key column to Order table
+    @JoinColumn(name = "customer_id")
     private Customer customer;
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus = OrderStatus.PENDING;
     @OneToOne(cascade = CascadeType.ALL)
     private Product product;
     private LocalDate orderDate;
+    private String message;
 }

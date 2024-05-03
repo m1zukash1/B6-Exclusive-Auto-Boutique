@@ -51,7 +51,6 @@ public class LoginController {
         try {
             entityManager.getTransaction().begin();
 
-            // Query to find the user by email
             TypedQuery<User> query = entityManager.createQuery("SELECT u FROM User u WHERE u.email = :email", User.class);
             query.setParameter("email", email);
             List<User> users = query.getResultList();
@@ -59,27 +58,24 @@ public class LoginController {
             if (!users.isEmpty()) {
                 User user = users.get(0);
                 String hashedPassword = user.getPassword();
-                String userType = user.getClass().getSimpleName(); // This assumes you have different classes for each user type
+                String userType = user.getClass().getSimpleName();
 
-                // Check if the entered password matches the hashed password
                 if (PasswordManager.validatePassword(enteredPassword, hashedPassword)) {
                     System.out.println("Login Successful. User Type: " + userType);
 
-                    // Set the static connectedUser property
                     connectedUser = user;
 
-                    // UI handling based on user role, using the class name to determine user type
                     switch (userType) {
                         case "Admin":
                             loginAsAdmin(event);
                             break;
                         case "Customer":
                             loginAsCustomer(event);
+                            break;
                         case "Manager":
                             loginAsManager(event);
                             break;
                         default:
-                            // Handle unknown user type if necessary
                             break;
                     }
 
@@ -189,7 +185,7 @@ public class LoginController {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("main-window.fxml"));
         Scene mainScene = new Scene(fxmlLoader.load(), 1600, 900);
         MainWindowController controller = fxmlLoader.getController();
-        controller.setCustomerView();  // Set the view to customer mode
+        controller.setCustomerView();
 
         Stage mainStage = new Stage();
         mainStage.setTitle("Customer View");

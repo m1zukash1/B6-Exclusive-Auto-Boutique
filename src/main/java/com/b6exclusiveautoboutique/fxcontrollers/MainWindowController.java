@@ -20,6 +20,6 @@ public class MainWindowController{
     }
 
     public void setAdminView() {
-        // potentially reset or ensure all tabs are visible if dynamic changes are needed in the future
+        return;
     }
 }

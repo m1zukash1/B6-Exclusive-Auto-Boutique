@@ -15,10 +15,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
+import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.hibernate.grammars.hql.HqlParser;
@@ -35,6 +32,8 @@ public class ShopController implements Initializable {
 
     @FXML
     public ListView<Product> productListView;
+    public TextArea messageTextArea;
+    public TextField nameTextField;
     @FXML
     private TreeView<Comment> commentTreeView;
 
@@ -44,12 +43,16 @@ public class ShopController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         updateProductListView();
 
+        nameTextField.setText(LoginController.connectedUser.getName());
+
         productListView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-            displayCommentsForSelectedProduct();  // Update the TreeView whenever a new product is selected
+            displayCommentsForSelectedProduct();
         });
     }
 
     private void displayCommentsForSelectedProduct() {
+        messageTextArea.setText("");
+
         Product selectedProduct = productListView.getSelectionModel().getSelectedItem();
 
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("b6_exclusive_auto_boutique");
@@ -60,18 +63,17 @@ public class ShopController implements Initializable {
             TreeItem<Comment> root = new TreeItem<>();
             root.setExpanded(true);
 
-            // Filter to add only root comments (comments with no parent)
             for (Comment comment : selectedProduct.getComments()) {
-                if (comment.getParentComment() == null) {  // Check if the comment has no parent
+                if (comment.getParentComment() == null) {
                     TreeItem<Comment> commentItem = new TreeItem<>(comment);
-                    addCommentTreeItems(commentItem, comment.getReplies());  // Recursively add replies if any
+                    addCommentTreeItems(commentItem, comment.getReplies());
                     root.getChildren().add(commentItem);
                 }
             }
             commentTreeView.setRoot(root);
             commentTreeView.setShowRoot(false);
         } else {
-            commentTreeView.setRoot(null);  // Clear the TreeView if no product is selected
+            commentTreeView.setRoot(null);
         }
     }
 
@@ -80,7 +82,7 @@ public class ShopController implements Initializable {
         for (Comment reply : replies) {
             TreeItem<Comment> childItem = new TreeItem<>(reply);
             parentItem.getChildren().add(childItem);
-            addCommentTreeItems(childItem, reply.getReplies());  // Recurse to add further nested replies
+            addCommentTreeItems(childItem, reply.getReplies());
         }
     }
 
@@ -90,7 +92,6 @@ public class ShopController implements Initializable {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
 
         try {
-            // JPQL query to find products not associated with any orders
             String jpql = "SELECT p FROM Product p WHERE p.id NOT IN (SELECT o.product.id FROM Order o)";
             List<Product> unorderedProducts = entityManager.createQuery(jpql, Product.class).getResultList();
 
@@ -145,8 +146,10 @@ public class ShopController implements Initializable {
         order.setProduct(selectedProduct);
         order.setOrderDate(LocalDate.now());
         order.setCustomer(currentlyConnectedCustomer);
+        order.setMessage(messageTextArea.getText());
         currentlyConnectedCustomer.getOrders().add(order);
         genericHibernate.update(currentlyConnectedCustomer);
+        messageTextArea.setText("");
         updateProductListView();
     }
 

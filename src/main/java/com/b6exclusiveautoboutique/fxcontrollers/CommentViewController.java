@@ -24,7 +24,7 @@ public class CommentViewController {
 
     void init(Product product, Comment parentComment) {
         this.product = product;
-        this.parentComment = parentComment;  // Store the parent comment
+        this.parentComment = parentComment;
     }
     @FXML
     void onCreateButtonPressed(ActionEvent event) {
